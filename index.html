@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+  margin: 0;
+}
+
+* {
+	transition: 0.5s;
+}
+
+.sidenav {
+  height: 175px;
+  width: 0;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #222222;
+  overflow-x: hidden;
+}
+
+.sidenav button {
+  padding: 3px 6px 3px 6px;
+  text-decoration: none;
+  font-size: 18px;
+  border: none;
+  background-color: #222222;
+  color: #818181;
+  display: block;
+}
+
+.sidenav button:hover {
+  color: #f1f1f1;
+}
+
+#openCloseButton {
+	height: 173px;
+	width: 10px;
+	background-color: #111111;
+	position: fixed;
+	top: 0;
+	border-style: outset;
+	border-width: 1px;
+}
+
+#main-content {
+	margin-left: 15px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <button type="button">Target Input</button>
+  <button type="button">Multi Basket</button>
+  <button type="button">Target Orders</button>
+  <button type="button">Slice Orders</button>
+  <button type="button">Adjust Orders</button>
+  <button type="button">A Graphs</button>
+</div>
+
+  <div id="openCloseButton" onclick="toggleNav()"></div>
+  <div id="main-content">
+    <h2>Sidenav Push Example</h2>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+    <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+  </div>
+
+<script>
+var navWidth = 140;
+function toggleNav() {
+  w = document.getElementById("mySidenav").offsetWidth;
+  if(w == 0)
+    w = navWidth;   
+  else
+	w = 0;
+
+  document.getElementById("mySidenav").style.width = w + "px";
+  document.getElementById("openCloseButton").style.marginLeft = w + "px";
+
+}
+</script>
+   
+</body>
+</html> 
+
