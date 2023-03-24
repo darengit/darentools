@@ -134,11 +134,21 @@ function toggleNav() {
 }
 
 function loadTargetInput() {
-  topMenu = document.getElementById("top-menu")
+  topMenu = document.getElementById("top-menu");
   topMenu.innerHTML = `
     <button type="button">Regen Target Input</button>
     <button type="button">Run Multi-Basket</button>
-  `
+  `;
+  displayLatestTargetInput();
+}
+
+function displayLatestTargetInput() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    document.getElementById("main-content").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "./cgi-bin/target_intput.py", true);
+  xhttp.send();
 }
 </script>
 </body>
