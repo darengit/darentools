@@ -24,9 +24,11 @@ body {
   border: none;
   background-color: #222222;
   color: #818181;
+  white-space: nowrap;
+  display: block;
 }
 
-.menu button:hover:enabled {
+.menu button:hover {
   color: #f1f1f1;
 }
 
@@ -39,11 +41,6 @@ body {
   left: 0;
   background-color: #222222;
   overflow: hidden;
-}
-
-#side-nav button {
-  white-space: nowrap;
-  display: block;
 }
 
 #open-close-button {
@@ -60,8 +57,19 @@ body {
 	margin-left: 15px;
 }
 
-button.right {
-	margin-left: 40px;
+#regen-button,
+#run-button,
+#target-summary-button,
+#target-copy-button,
+#target-send-button,
+#slice-summary-button,
+#slice-copy-button,
+#slice-send-button,
+#trim-summary-button,
+#trim-copy-button,
+#trim-send-button {
+	margin-left: 30px;
+	display: none;
 }
 
 </style>
@@ -70,25 +78,28 @@ button.right {
 
 <div id="side-nav" class="menu">
   <br>
-  <button type="button" onclick="loadTargetInput()">Target Input</button>
-  <button type="button" class="right" disabled>Regen</button>
-  <button type="button" class="right" disabled>Run</button>
+  <button id="target-input-button" type="button">Target Input</button>
+  <button id="regen-button" class="pure-action" type="button">Regen</button>
+  <button id="run-button" class="pure-action" type="button">Run</button>
   <br>
-  <button type="button">Multi Basket</button>
+  <button id="multi-basket-button" type="button">Multi Basket</button>
   <br>
-  <button type="button">Target</button>
-  <button type="button" class="right" disabled>Copy</button>
-  <button type="button" class="right" disabled>Send</button>
+  <button id="target-button" type="button">Target</button>
+  <button id="target-summary-button" type="button">Summary</button>
+  <button id="target-copy-button" class="pure-action" type="button">Copy</button>
+  <button id="target-send-button" class="pure-action" type="button">Send</button>
   <br>
-  <button type="button">Slice</button>
-  <button type="button" class="right" disabled>Copy</button>
-  <button type="button" class="right" disabled>Send</button>
+  <button id="slice-button" type="button">Slice</button>
+  <button id="slice-summary-button" type="button">Summary</button>
+  <button id="slice-copy-button" class="pure-action" type="button">Copy</button>
+  <button id="slice-send-button" class="pure-action" type="button">Send</button>
   <br>
-  <button type="button">Trim</button>
-  <button type="button" class="right" disabled>Copy</button>
-  <button type="button" class="right" disabled>Send</button>
+  <button id="trim-button" type="button">Trim</button>
+  <button id="trim-summary-button" type="button">Summary</button>
+  <button id="trim-copy-button" class="pure-action" type="button">Copy</button>
+  <button id="trim-send-button" class="pure-action" type="button">Send</button>
   <br>
-  <button type="button">A Graphs</button>
+  <button id="agraphs-button" type="button">A Graphs</button>
 </div>
 
   <div id="open-close-button" onclick="toggleNav()"></div>
@@ -137,6 +148,89 @@ button.right {
   </div>
 
 <script>
+var curSideNavSel = null;
+
+var sideNavButtons = document.querySelectorAll('#side-nav button');
+for(sideNavButton of sideNavButtons) {
+	console.log(sideNavButton);
+	sideNavButton.addEventListener('click', sideNavButtonPress);
+}
+
+function sideNavButtonPress() {
+	console.log("pressed " + this.id);
+	if(this.className != "pure-action") {
+		sideNavUnselectEnableAndHide(curSideNavSel);
+		sideNavSelectDisableAndUnhide(this.id);
+	}
+}
+
+function sideNavUnselectEnableAndHide(buttonId) {
+	if(buttonId == null) return;
+
+	leavingElt = document.getElementById(buttonId);
+	leavingElt.disable = false;
+	leavingElt.style.color = "#818181";
+	switch(buttonId) {
+	case "target-input-button":
+		document.getElementById("regen-button").style.display = "none";
+		document.getElementById("run-button").style.display = "none";
+		break;
+	case "target-button":
+		document.getElementById("target-copy-button").style.display = "none";
+		document.getElementById("target-send-button").style.display = "none";
+	case "target-summary-button":
+		document.getElementById("target-summary-button").style.display = "none";
+		break;
+	case "slice-button":
+		document.getElementById("slice-copy-button").style.display = "none";
+		document.getElementById("slice-send-button").style.display = "none";
+	case "slice-summary-button":
+		document.getElementById("slice-summary-button").style.display = "none";
+		break;
+	case "trim-button":
+		document.getElementById("trim-copy-button").style.display = "none";
+		document.getElementById("trim-send-button").style.display = "none";
+	case "trim-summary-button":
+		document.getElementById("trim-summary-button").style.display = "none";
+		break;
+	default:
+	}
+
+}
+
+function sideNavSelectDisableAndUnhide(buttonId) {
+	curSideNavSel = buttonId;
+	curElt = document.getElementById(buttonId);
+	curElt.style.color = "#f1f1f1";
+	curElt.disable = true;
+	switch(buttonId) {
+	case "target-input-button":
+		document.getElementById("regen-button").style.display = "block";
+		document.getElementById("run-button").style.display = "block";
+		break;
+	case "target-button":
+		document.getElementById("target-copy-button").style.display = "block";
+		document.getElementById("target-send-button").style.display = "block";
+	case "target-summary-button":
+		document.getElementById("target-summary-button").style.display = "block";
+		break;
+	case "slice-button":
+		document.getElementById("slice-copy-button").style.display = "block";
+		document.getElementById("slice-send-button").style.display = "block";
+	case "slice-summary-button":
+		document.getElementById("slice-summary-button").style.display = "block";
+		break;
+	case "trim-button":
+		document.getElementById("trim-copy-button").style.display = "block";
+		document.getElementById("trim-send-button").style.display = "block";
+	case "trim-summary-button":
+		document.getElementById("trim-summary-button").style.display = "block";
+		break;
+	default:
+	}
+
+}
+
 var navWidth = 140;
 function toggleNav() {
   w = document.getElementById("side-nav").offsetWidth;
@@ -150,15 +244,6 @@ function toggleNav() {
 
   ocButtonWidth = document.getElementById("open-close-button").offsetWidth;
   document.getElementById("main-content").style.marginLeft = w + ocButtonWidth + "px";
-}
-
-function loadTargetInput() {
-  topMenu = document.getElementById("top-menu");
-  topMenu.innerHTML = `
-    <button type="button">Regen Target Input</button>
-    <button type="button">Run Multi-Basket</button>
-  `;
-  displayLatestTargetInput();
 }
 
 function displayLatestTargetInput() {
