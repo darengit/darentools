@@ -4,9 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
-  font-family: "Lato", sans-serif;
   margin: 0;
   padding: 0;
+  font-family: "Arial", sans-serif;
 }
 
 * {
@@ -20,12 +20,17 @@ body {
 .menu button {
   padding: 3px 6px 3px 6px;
   text-decoration: none;
+  font-family: "Arial Black", sans-serif;
   font-size: 18px;
   border: none;
   background-color: #222222;
   color: #818181;
   white-space: nowrap;
   display: block;
+}
+
+button.pure-action {
+  font-family: "Arial", sans-serif;
 }
 
 .menu button:hover {
@@ -162,6 +167,11 @@ function sideNavButtonPress() {
 		sideNavUnselectEnableAndHide(curSideNavSel);
 		sideNavSelectDisableAndUnhide(this.id);
 	}
+
+	switch(this.id) {
+	case "regen-button":
+		displayLatestTargetInput();
+	}
 }
 
 function sideNavUnselectEnableAndHide(buttonId) {
@@ -254,7 +264,7 @@ function displayLatestTargetInput() {
     document.getElementById("main-content").innerHTML = this.responseText;
   }
   console.log(window.location.origin);
-  xhttp.open("GET", window.location.origin + "/cgi-bin/target_input.py", true);
+  xhttp.open('GET', window.location.origin + '/Regen', true);
   xhttp.send();
 }
 </script>
