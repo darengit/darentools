@@ -38,7 +38,7 @@ def upComing(name, aDate, eDate):
 
     if eDate == tDate:
         return 'Today'
-    elif aDate == tDate + pd.tseries.offsets.BDay(1);
+    elif aDate == tDate + pd.tseries.offsets.BDay(1):
         return 'Today'
     elif eDate == tDate + pd.tseries.offsets.BDay(1):
         return 'Soon'
@@ -50,40 +50,39 @@ def genTargetInput():
     tlInfo = {}
 
     for tlFile in os.listdir(base):
-    try:
-
-        if tlFile[0:2] == '~$':
-            continue
-
-        info = tlFile.split('_')
-        if len(info) < 6:
-            continue
-
-        micro = info[0]
-        if not micro.isdigit():
-            continue
-        micro = int(micro)
-
-        tlName = ' '.join([ s for s in info[1:-3] if not isKeyDate(s)])
-
-        fileDate = convertDate(info[-2], 'F')
-        effDate = convertDate(info[-3], 'E')
-        annDate = convertDate(info[-4], 'A')
-
-        source = info[-1].split('.')[0]
-
-        if micro not in tlInfo:
-            tlInfo[micro] = {}
-        else:
-            errors.append('duplicate file for micro {}'.format(micro))
-            if fileDate <= tlInfo[micro]['FileDate']:
+        try:
+            if tlFile[0:2] == '~$':
+                continue
+            
+            info = tlFile.split('_')
+            if len(info) < 6:
                 continue
 
-        tlInfo[micro]['TlName'] = tlName
-        tlInfo[micro]['Source'] = source
-        tlInfo[micro]['FileDate'] = fileDate
-        tlInfo[micro]['AnnDate'] = annDate
-        tlInfo[micro]['EffDate'] = effDate
-        tlInfo[micro]['Upcoming'] = upComing(tlName, annDate, effDate)
-    except Exception as e:
-        errors.append(str(e) + ' in ' + tlFile)
+            micro = info[0]
+            if not micro.isdigit():
+                continue
+            micro = int(micro)
+
+            tlName = ' '.join([ s for s in info[1:-3] if not isKeyDate(s)])
+
+            fileDate = convertDate(info[-2], 'F')
+            effDate = convertDate(info[-3], 'E')
+            annDate = convertDate(info[-4], 'A')
+
+            source = info[-1].split('.')[0]
+
+            if micro not in tlInfo:
+                tlInfo[micro] = {}
+            else:
+                errors.append('duplicate file for micro {}'.format(micro))
+                if fileDate <= tlInfo[micro]['FileDate']:
+                    continue
+
+            tlInfo[micro]['TlName'] = tlName
+            tlInfo[micro]['Source'] = source
+            tlInfo[micro]['FileDate'] = fileDate
+            tlInfo[micro]['AnnDate'] = annDate
+            tlInfo[micro]['EffDate'] = effDate
+            tlInfo[micro]['Upcoming'] = upComing(tlName, annDate, effDate)
+        except Exception as e:
+            errors.append(str(e) + ' in ' + tlFile)

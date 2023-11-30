@@ -1,4 +1,4 @@
-#!/home/centos/anaconda3/bin/python3
+#!/usr/local/bin/python3.8
 
 """
 License: MIT License
@@ -22,15 +22,25 @@ class ToolsHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
 
-        if(self.path == '/Regen'):
+        if(self.path == '/regen'):
             util.genTargetInput()
-            self._set_response(200, 'text/html')
-        elif (self.path[-5:] == '.html'):
+            self._set_response(200, 'text/plain')
+        elif self.path.endswith('.html'):
             with open('.' + self.path, 'r') as f:
                 get_html = f.read()
             self._set_response(200, 'text/html')
             self.wfile.write(bytes(get_html, 'utf-8'))
-        elif (self.path[-5:] == '.json'):
+        elif self.path.endswith('.css'):
+            with open('.' + self.path, 'r') as f:
+                get_html = f.read()
+            self._set_response(200, 'text/css')
+            self.wfile.write(bytes(get_html, 'utf-8'))
+        elif self.path.endswith('.js'):
+            with open('.' + self.path, 'r') as f:
+                get_html = f.read()
+            self._set_response(200, 'text/javascript')
+            self.wfile.write(bytes(get_html, 'utf-8'))
+        elif self.path.endswith('.json'):
             with open('.' + self.path, 'r') as f:
                 get_json = f.read()
             self._set_response(200, 'application/json')
@@ -49,9 +59,9 @@ class ToolsHandler(BaseHTTPRequestHandler):
         self._set_response()
         self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
 
-def run(server_class=HTTPServer, handler_class=ToolsHandler, port=80):
+def run(server_class=HTTPServer, handler_class=ToolsHandler, host='', port=80):
     logging.basicConfig(level=logging.INFO)
-    server_address = ('', port)
+    server_address = (host, port)
     httpd = server_class(server_address, handler_class)
     logging.info('Starting httpd...\n')
     try:
@@ -64,7 +74,7 @@ def run(server_class=HTTPServer, handler_class=ToolsHandler, port=80):
 if __name__ == '__main__':
     from sys import argv
 
-    if len(argv) == 2:
-        run(port=int(argv[1]))
+    if len(argv) == 3:
+        run(host=argv[1], port=int(argv[2]))
     else:
         run()
