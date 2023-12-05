@@ -22,9 +22,12 @@ class ToolsHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
 
-        if(self.path == '/regen'):
-            util.genTargetInput()
-            self._set_response(200, 'text/plain')
+        
+        if self.path == '/':
+            with open('.' + self.path + 'index.html', 'r') as f:
+                get_html = f.read()
+            self._set_response(200, 'text/html')
+            self.wfile.write(bytes(get_html, 'utf-8'))
         elif self.path.endswith('.html'):
             with open('.' + self.path, 'r') as f:
                 get_html = f.read()
@@ -56,7 +59,10 @@ class ToolsHandler(BaseHTTPRequestHandler):
         logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
                 str(self.path), str(self.headers), post_data.decode('utf-8'))
 
-        self._set_response()
+        if self.path == '/regen':
+            util.genTargetInput()
+
+        self._set_response(200, 'text/plain')
         self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
 
 def run(server_class=HTTPServer, handler_class=ToolsHandler, host='', port=80):

@@ -45,7 +45,35 @@ def upComing(name, aDate, eDate):
     elif aDate == tDate + pd.tseries.offsets.BDay(2):
         return 'Soon'
 
+
+def genTargetInputData():
+    data = {
+        "InputSlice(bps)": [0,0],
+        "Micro": [108,109],
+        "Portfolio": ["FRESVOL","LTM12M1M"],
+    }
+
+    return pd.DataFrame(data)
+
+def genHtml(dataDf, fname):
+    inputCols = [col for col in dataDf.columns if "Input" in col]
+    for inputCol in inputCols:
+        dataDf[inputCol] = dataDf[inputCol].apply(lambda val: f'<input type="text" value="{val}" style="text-align:right;">')
+    dataDf.columns = dataDf.columns.str.replace('Input','')
+
+    currentTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    titleHtml = f"Generated on: {currentTime}"
+
+
+    with open(fname + '.html', "w") as f:
+        f.write(titleHtml + dataDf.to_html(escape=False, index=False))
+    print("DAREN DEBUG target-input.html written")
+
 def genTargetInput():
+    targetInputData = genTargetInputData()
+    genHtml(targetInputData, "target-input")
+
+def genTargetInput2():
 
     tlInfo = {}
 
